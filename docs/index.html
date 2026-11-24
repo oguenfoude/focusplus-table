@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Table to CSV &amp; XLSX — FocusPlus</title>
+<meta name="description" content="A Chrome extension that turns any web table into CSV, XLSX, JSON or Markdown. Four permissions, no host access, no network calls, 500 rows per table.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23d13c14'/%3E%3Crect x='8' y='9' width='16' height='2.6' rx='1.3' fill='white'/%3E%3Crect x='8' y='14.7' width='16' height='2.6' rx='1.3' fill='white'/%3E%3Crect x='8' y='20.4' width='16' height='2.6' rx='1.3' fill='white'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --ink: #1d2430;
+    --muted: #5a6472;
+    --line: #e4e7ec;
+    --accent: #d13c14;
+    --soft: #fff1ec;
+    --bg: #fbfcfd;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 22px; }
+  header { border-bottom: 1px solid var(--line); background: #fff; }
+  .bar { display: flex; align-items: center; gap: 10px; padding: 14px 0; }
+  .mark {
+    width: 30px; height: 30px; border-radius: 8px; background: var(--accent);
+    display: inline-flex; align-items: center; justify-content: center; flex: none;
+  }
+  .mark i { display: block; width: 15px; height: 2.4px; background: #fff; border-radius: 2px;
+            box-shadow: 0 5px 0 #fff, 0 10px 0 #fff; }
+  .brand { font-weight: 800; font-size: 18px; letter-spacing: -.012em; }
+  .tag { font-size: 12px; font-weight: 700; color: var(--muted); border: 1px solid var(--line);
+         border-radius: 5px; padding: 1px 6px; }
+  nav { margin-left: auto; display: flex; gap: 16px; font-size: 14px; }
+  nav a { color: var(--muted); text-decoration: none; }
+  nav a:hover, nav a:focus-visible { color: var(--accent); text-decoration: underline; }
+
+  main { padding: 46px 0 20px; }
+  h1 { font-size: 40px; line-height: 1.1; letter-spacing: -.032em; margin: 0 0 16px; font-weight: 800; }
+  .lede { font-size: 19px; color: #3b4553; margin: 0 0 10px; max-width: 58ch; }
+  .sub { color: var(--muted); font-size: 15px; margin: 0 0 30px; }
+
+  .cta { display: inline-block; background: var(--accent); color: #fff; text-decoration: none;
+         font-weight: 700; padding: 11px 18px; border-radius: 8px; font-size: 15px; }
+  .cta:hover { background: #b8340f; }
+  .cta:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  .cta-note { display: inline-block; margin-left: 12px; font-size: 13px; color: var(--muted); }
+
+  h2 { font-size: 22px; letter-spacing: -.018em; margin: 44px 0 12px; font-weight: 700; }
+  h3 { font-size: 16px; margin: 26px 0 8px; font-weight: 700; }
+  p { margin: 0 0 14px; }
+
+  ul.checks { list-style: none; padding: 0; margin: 0 0 8px; }
+  ul.checks li { position: relative; padding-left: 28px; margin-bottom: 10px; }
+  ul.checks li::before {
+    content: ""; position: absolute; left: 0; top: 5px; width: 16px; height: 16px;
+    border-radius: 50%; background: var(--accent);
+  }
+  ul.checks li::after {
+    content: ""; position: absolute; left: 5.5px; top: 8.5px; width: 4px; height: 8px;
+    border: 2px solid #fff; border-top: 0; border-left: 0; transform: rotate(42deg);
+  }
+
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 18px; font-size: 14.5px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 12.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  tr:last-child td { border-bottom: 0; }
+  code { font: 13.5px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+         background: #f2f4f7; padding: 1px 5px; border-radius: 4px; }
+  .yes { color: #14602f; font-weight: 700; }
+  .no { color: #8f2b14; font-weight: 700; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; margin: 14px 0 6px; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 15px 16px; }
+  .card h3 { margin: 0 0 6px; font-size: 15px; }
+  .card p { margin: 0; font-size: 14px; color: var(--muted); }
+
+  .note { background: var(--soft); border: 1px solid #f0c8b8; border-radius: 10px;
+          padding: 14px 16px; font-size: 14.5px; color: #6a4436; }
+  .note b { color: #8f2b14; }
+
+  footer { border-top: 1px solid var(--line); margin-top: 48px; padding: 22px 0 34px;
+           color: var(--muted); font-size: 13.5px; background: #fff; }
+  footer a { color: var(--muted); }
+  footer a:hover { color: var(--accent); }
+  .foot-row { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <span class="mark"><i></i></span>
+    <span class="brand">FocusPlus</span>
+    <span class="tag">Table</span>
+    <nav>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="disclaimer.html">Disclaimer</a>
+      <a href="mailto:oguenfoude@proton.me">Support</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1>Any web table.<br>Straight into a spreadsheet.</h1>
+  <p class="lede">
+    Table to CSV &amp; XLSX — FocusPlus finds the tables on the page you are already
+    looking at and writes them out as CSV, XLSX, JSON or Markdown. It runs entirely
+    inside your browser.
+  </p>
+  <p class="sub">Free. No account. No licence key. 500 rows per table.</p>
+
+  <a class="cta" href="https://chromewebstore.google.com/" rel="noopener">Get it on the Chrome Web Store</a>
+  <span class="cta-note">Chrome 102 and newer · Edge and Brave work too</span>
+
+  <h2>What it does</h2>
+  <ul class="checks">
+    <li>Scans the current page and lists every table it finds, with its true size.</li>
+    <li>Click-to-select picker — press <code>Alt+Shift+T</code>, hover, click the table you want.</li>
+    <li>Clean before you export: delimiter, trim, header row, column selection, blank-row stripping.</li>
+    <li>CSV with a UTF-8 BOM and CRLF line endings, so Excel opens it without an import wizard.</li>
+    <li>XLSX written off-thread in a worker, so the popup never freezes on a large table.</li>
+    <li>Leading zeros stay leading zeros. <code>004512</code> does not become <code>4512</code>.</li>
+    <li>Cells that begin with <code>=</code>, <code>+</code>, <code>-</code> or <code>@</code> are neutralised, so a scraped formula cannot execute when the file opens.</li>
+    <li>Merged cells, <code>rowspan="0"</code>, nested tables, ARIA grids, CSS grids, shadow DOM and same-origin frames all handled.</li>
+  </ul>
+
+  <h2>Four permissions. That is the whole list.</h2>
+  <p>
+    This is the difference you see on the install screen. Chrome shows a warning for
+    every permission an extension asks for, and the widest one is
+    <em>"Read and change all your data on all websites"</em> — the warning that
+    <code>&lt;all_urls&gt;</code> produces. This extension does not request it, and
+    there is no <code>host_permissions</code> key in its manifest at all.
+  </p>
+
+  <table>
+    <thead>
+      <tr><th>Permission</th><th>Why it is needed</th><th>What it cannot do</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>activeTab</code></td>
+        <td>Read the page you invoked the extension on, and only that page, and only after you click.</td>
+        <td>It cannot follow you to another site, and it is revoked the moment you navigate away.</td>
+      </tr>
+      <tr>
+        <td><code>storage</code></td>
+        <td>Remember your cleaning preferences and, if you leave the box ticked, your last scan.</td>
+        <td>It cannot sync anywhere. Everything stays in this browser profile.</td>
+      </tr>
+      <tr>
+        <td><code>scripting</code></td>
+        <td>Inject the extraction code into the tab you just activated.</td>
+        <td>It cannot inject into a tab you have not activated.</td>
+      </tr>
+      <tr>
+        <td><code>contextMenus</code></td>
+        <td>Add the right-click "Export table to CSV" and "Pick a table" entries.</td>
+        <td>It cannot read anything on its own.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>How that compares</h3>
+  <table>
+    <thead>
+      <tr><th>&nbsp;</th><th>FocusPlus Table</th><th>Typical table exporter</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Host permissions</td><td class="yes">none</td><td class="no">&lt;all_urls&gt;</td></tr>
+      <tr><td>Install warning about all sites</td><td class="yes">not shown</td><td class="no">shown</td></tr>
+      <tr><td>Reads pages you did not activate</td><td class="yes">no</td><td class="no">yes</td></tr>
+      <tr><td>Network requests</td><td class="yes">zero</td><td>varies, often an account server</td></tr>
+      <tr><td>Formats on the free tier</td><td class="yes">all of them</td><td>usually CSV only</td></tr>
+      <tr><td>Rows on the free tier</td><td>500 per table</td><td>often 250</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <b>About the 500-row limit.</b> Each table exports its first 500 rows, and the header
+    counts as one of them. The popup always shows the table's real size next to a
+    <b>500 max</b> badge, so nothing is hidden from you before you click export. There is
+    no time limit, no daily quota, no account, and no way to buy your way past it — because
+    there is nothing to buy. The limit is a fixed property of this free build.
+  </div>
+
+  <h2>What it cannot reach</h2>
+  <p>
+    Some tables are structurally out of reach for any extension working under
+    these permissions. They are listed on the <a href="disclaimer.html">disclaimer page</a>:
+    <code>chrome://</code> pages, tables painted into <code>&lt;canvas&gt;</code>,
+    cross-origin iframes, and closed shadow roots. If a page renders its data on a canvas,
+    there is no table element to read.
+  </p>
+
+  <h2>Privacy, in one paragraph</h2>
+  <p>
+    No network requests. No telemetry. No analytics. No account. No host permissions.
+    Table contents are read into memory, written to a file you asked for, and discarded.
+    The only things stored are your cleaning preferences and optionally your last scan,
+    both in <code>chrome.storage.local</code> on this device.
+    Read the full <a href="privacy-policy.html">privacy policy</a>.
+  </p>
+
+  <h2>Support</h2>
+  <p>
+    Email <a href="mailto:oguenfoude@proton.me">oguenfoude@proton.me</a>. Include the site
+    you were on and what the table looked like, and you will get a real answer.
+  </p>
+
+  <h2>Built with</h2>
+  <p>
+    Plain JavaScript, no framework, no build step. XLSX writing uses SheetJS Community
+    Edition (Apache-2.0), vendored into the package. Everything else is original code.
+  </p>
+</main>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>&copy; 2026 FocusPlus</span>
+    <a href="privacy-policy.html">Privacy policy</a>
+    <a href="disclaimer.html">Disclaimer</a>
+    <a href="mailto:oguenfoude@proton.me">oguenfoude@proton.me</a>
+  </div>
+</footer>
+
+</body>
+</html>

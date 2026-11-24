@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Disclaimer and browser limits — FocusPlus Table</title>
+<meta name="description" content="FocusPlus Table is free software provided as-is. This page documents its warranty position and the browser-level limits it cannot cross.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23d13c14'/%3E%3Crect x='8' y='9' width='16' height='2.6' rx='1.3' fill='white'/%3E%3Crect x='8' y='14.7' width='16' height='2.6' rx='1.3' fill='white'/%3E%3Crect x='8' y='20.4' width='16' height='2.6' rx='1.3' fill='white'/%3E%3C/svg%3E">
+<style>
+  :root { --ink:#1d2430; --muted:#5a6472; --line:#e4e7ec; --accent:#d13c14; --soft:#fff1ec; --bg:#fbfcfd; }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+         font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 0 22px; }
+  header { border-bottom:1px solid var(--line); background:#fff; }
+  .bar { display:flex; align-items:center; gap:10px; padding:14px 0; }
+  .mark { width:30px; height:30px; border-radius:8px; background:var(--accent);
+          display:inline-flex; align-items:center; justify-content:center; flex:none; }
+  .mark i { display:block; width:15px; height:2.4px; background:#fff; border-radius:2px;
+            box-shadow:0 5px 0 #fff,0 10px 0 #fff; }
+  .brand { font-weight:800; font-size:18px; letter-spacing:-.012em; }
+  .tag { font-size:12px; font-weight:700; color:var(--muted); border:1px solid var(--line);
+         border-radius:5px; padding:1px 6px; }
+  nav { margin-left:auto; display:flex; gap:16px; font-size:14px; }
+  nav a { color:var(--muted); text-decoration:none; }
+  nav a:hover, nav a:focus-visible { color:var(--accent); text-decoration:underline; }
+  main { padding: 40px 0 24px; }
+  h1 { font-size:34px; line-height:1.15; letter-spacing:-.028em; margin:0 0 6px; font-weight:800; }
+  .meta { color:var(--muted); font-size:14px; margin:0 0 28px; }
+  h2 { font-size:19px; letter-spacing:-.014em; margin:34px 0 10px; font-weight:700; }
+  h3 { font-size:15.5px; margin:20px 0 6px; font-weight:700; }
+  p { margin:0 0 13px; }
+  ul { margin:0 0 14px; padding-left:22px; }
+  li { margin-bottom:7px; }
+  table { width:100%; border-collapse:collapse; margin:12px 0 18px; font-size:14.5px; }
+  th,td { text-align:left; padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { font-size:12.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); }
+  tr:last-child td { border-bottom:0; }
+  code { font:13.5px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+         background:#f2f4f7; padding:1px 5px; border-radius:4px; }
+  .lede { background:#fff; border:1px solid var(--line); border-left:4px solid var(--accent);
+          border-radius:8px; padding:14px 16px; margin:0 0 26px; font-size:15.5px; }
+  .note { background:var(--soft); border:1px solid #f0c8b8; border-radius:10px;
+          padding:13px 16px; font-size:14.5px; color:#6a4436; }
+  .yes { color:#14602f; font-weight:700; }
+  .no { color:#8f2b14; font-weight:700; }
+  footer { border-top:1px solid var(--line); margin-top:44px; padding:20px 0 32px;
+           color:var(--muted); font-size:13.5px; background:#fff; }
+  footer a { color:var(--muted); }
+  .foot-row { display:flex; flex-wrap:wrap; gap:8px 18px; align-items:center; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <span class="mark"><i></i></span>
+    <span class="brand">FocusPlus</span>
+    <span class="tag">Table</span>
+    <nav>
+      <a href="index.html">Overview</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="mailto:oguenfoude@proton.me">Support</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1>Disclaimer and browser limits</h1>
+  <p class="meta">Table to CSV &amp; XLSX — FocusPlus · version 1.0.0 · last updated 24 November 2026</p>
+
+  <p class="lede">
+    This extension is free software, published without charge and without a commercial
+    relationship between you and its author. It is provided as-is. This page states that
+    plainly, and then documents exactly which limits are the browser's rather than the
+    extension's — so that when a table cannot be extracted, you know why.
+  </p>
+
+  <h2>1. No charge, no contract, no warranty</h2>
+  <p>
+    Version 1.0.0 is distributed free of charge. There is no payment, no subscription, no
+    licence key, no trial period and no paid tier. Nothing is sold to you, and no purchase
+    contract exists between you and FocusPlus.
+  </p>
+  <p>
+    The software is provided <strong>"as is", without warranty of any kind</strong>, express
+    or implied, including but not limited to the warranties of merchantability, fitness for
+    a particular purpose and non-infringement. In no event shall the author be liable for
+    any claim, damages or other liability, whether in an action of contract, tort or
+    otherwise, arising from, out of or in connection with the software or its use.
+  </p>
+  <p>
+    You are responsible for checking exported data before relying on it. A spreadsheet is a
+    copy of what a page displayed at one moment; it is not a record of what the page meant.
+  </p>
+
+  <h2>2. No affiliation</h2>
+  <p>
+    FocusPlus is independent. It is not affiliated with, endorsed by, or sponsored by
+    Google, Microsoft, the Chrome Web Store, or any website whose tables it reads. Product
+    and company names mentioned anywhere in this project belong to their respective owners.
+  </p>
+
+  <h2>3. What the extension does with what it reads</h2>
+  <p>
+    It reads the visible text of the table you asked for, on the tab you activated, and
+    turns it into a file. It sends nothing anywhere. It keeps no copy of the table after
+    the export completes. The full data inventory is on the
+    <a href="privacy-policy.html">privacy policy</a> page.
+  </p>
+
+  <h2>4. Limits that belong to the browser, not to this extension</h2>
+  <p>
+    Each row below is a hard boundary imposed by Chrome, by the same-origin model, or by
+    how a page was built. No extension running under four permissions can cross any of
+    them. They are listed so that a failure is never a mystery.
+  </p>
+
+  <table>
+    <thead>
+      <tr><th>Situation</th><th>What happens</th><th>Why it is unavoidable</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>chrome://</code> pages, the Chrome Web Store, and other protected origins</td>
+        <td class="no">Not readable at all</td>
+        <td>Chrome refuses script injection into these origins for every extension, regardless of permissions.</td>
+      </tr>
+      <tr>
+        <td>Data drawn into <code>&lt;canvas&gt;</code> — charts, virtualised grids, PDF viewers, most dashboards</td>
+        <td class="no">No table is found</td>
+        <td>A canvas holds pixels, not text nodes. There is no DOM to read, and reading pixels would require a screenshot and optical recognition, which is out of scope.</td>
+      </tr>
+      <tr>
+        <td>Cross-origin iframes</td>
+        <td class="no">Skipped, and counted in the scan summary</td>
+        <td>The same-origin policy blocks access to a frame served from another origin unless the extension holds host permissions for it — which this one deliberately does not.</td>
+      </tr>
+      <tr>
+        <td>Closed shadow roots</td>
+        <td class="no">Invisible to detection</td>
+        <td>A closed root exposes no <code>shadowRoot</code> reference. There is nothing to attach to.</td>
+      </tr>
+      <tr>
+        <td>Infinite scroll and paginated tables</td>
+        <td class="no">Only what is currently in the DOM is exported</td>
+        <td>The extension reads the document, not the site's data source. Rows that do not exist yet cannot be read, and following pages would need host permissions.</td>
+      </tr>
+      <tr>
+        <td>Tables behind a login or paywall you have not passed</td>
+        <td class="no">Not present, so not exported</td>
+        <td>If the page has not rendered the rows, they are not in the document.</td>
+      </tr>
+      <tr>
+        <td>Pages that fail to load, or load after you scan</td>
+        <td>Scan again once the table appears</td>
+        <td>Detection is a snapshot of the DOM at the moment you press Scan.</td>
+      </tr>
+      <tr>
+        <td>Text that only appears on hover or on click</td>
+        <td class="no">Not exported</td>
+        <td>Only rendered, visible text is read — deliberately, so that tooltips and hidden duplicate markup cannot pollute a cell.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>5. The 500-row limit</h2>
+  <p>
+    Each table exports its first 500 rows, and the header row counts as one of them. This
+    is a fixed property of the free build, stated in the extension's description, shown as
+    a <strong>500 max</strong> badge beside the table's true size before you export, and
+    reported in the status line afterwards as, for example,
+    <em>"first 500 of 1,001 rows"</em>.
+  </p>
+  <p>
+    The limit is not a trial, not a quota, and not a lever. There is no purchase that
+    removes it, and it does not reset or expire. Rows are cut whole: the exported matrix
+    stays rectangular, so no row is ever left short or misaligned.
+  </p>
+
+  <h2>6. Accuracy of an export</h2>
+  <p>
+    The extension copies what the page displays. It does not verify the page. Specifically:
+  </p>
+  <ul>
+    <li>Numbers are written as text, so a leading zero survives — and so a value the site
+      displayed as <code>1,234</code> stays exactly that, rather than being silently
+      reinterpreted.</li>
+    <li>Cells beginning with <code>=</code>, <code>+</code>, <code>-</code> or <code>@</code>
+      are prefixed with an apostrophe so a spreadsheet treats them as text. If you want the
+      raw value, turn the safety toggle off in the cleaning panel.</li>
+    <li>Hidden elements, nested tables and form-control markup are excluded on purpose, so
+      that duplicate mobile markup does not double every cell.</li>
+    <li>Merged cells are expanded so that every covered position carries the same value.</li>
+  </ul>
+
+  <h2>7. Reporting a problem</h2>
+  <p>
+    Write to <a href="mailto:oguenfoude@proton.me">oguenfoude@proton.me</a> with the page
+    address, what you expected, and what appeared. Bugs in a released version are fixed in
+    the next release; there is no support contract and no response-time guarantee, but every
+    report is read.
+  </p>
+
+  <div class="note">
+    <strong>Short version.</strong> Free, as-is, no warranty, no affiliation. It cannot read
+    <code>chrome://</code> pages, canvas-rendered data, cross-origin iframes or closed shadow
+    roots, because the browser forbids it. 500 rows per table, stated up front.
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>&copy; 2026 FocusPlus</span>
+    <a href="index.html">Overview</a>
+    <a href="privacy-policy.html">Privacy policy</a>
+    <a href="mailto:oguenfoude@proton.me">oguenfoude@proton.me</a>
+  </div>
+</footer>
+
+</body>
+</html>
