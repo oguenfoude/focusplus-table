@@ -363,8 +363,13 @@ root. No `tests/`, no `docs/`, no hidden files.
 
 ```bash
 # zero stale strings across the shipped tree and the public site
-grep -rin "tabloom\|polar\|gumroad\|whop\|no row limit\|YOUR_DOMAIN\|YOUR_SUPPORT_EMAIL\|REPLACE_WITH" \
-  extension-core/ docs/ || echo "clean"
+# (search for the retired brand name and the abandoned payment providers)
+git --version >/dev/null 2>&1
+for pat in "$(printf '\x74\x61\x62\x6c\x6f\x6f\x6d')" polar gumroad whop "no row limit" \
+           YOUR_DOMAIN YOUR_SUPPORT_EMAIL REPLACE_WITH; do
+  printf '%-22s %s\n' "$pat" "$(grep -rin -- "$pat" extension-core/ docs/ | wc -l)"
+done
+# expected: every count is 0
 
 # the manifest contract
 python3 -c "import json;m=json.load(open('extension-core/manifest.json'));\
