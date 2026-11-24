@@ -185,9 +185,12 @@
     The extension copies what the page displays. It does not verify the page. Specifically:
   </p>
   <ul>
-    <li>Numbers are written as text, so a leading zero survives — and so a value the site
-      displayed as <code>1,234</code> stays exactly that, rather than being silently
-      reinterpreted.</li>
+    <li>Values that begin with a zero are marked as text, so <code>004512</code> arrives as
+      <code>004512</code> rather than collapsing to <code>4512</code>. In CSV, TSV, Markdown
+      and JSON this is done with a leading apostrophe, which spreadsheets treat as a text
+      marker; in XLSX every cell is written as text outright. Turn off
+      <em>Leading-zero &amp; formula safety</em> in the cleaning panel to export the raw bytes
+      instead.</li>
     <li>Cells beginning with <code>=</code>, <code>+</code>, <code>-</code> or <code>@</code>
       are prefixed with an apostrophe so a spreadsheet treats them as text. If you want the
       raw value, turn the safety toggle off in the cleaning panel.</li>
